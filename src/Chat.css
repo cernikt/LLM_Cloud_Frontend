@@ -1,0 +1,132 @@
+/*
+
+:**:
+
+*/
+
+ .chat-app {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+ 
+.user {
+	text-align: right;
+	padding: 5px;
+	border-radius: 5px;
+	margin: 5px;
+}
+
+.user-text {
+	/* padding-right: 30px;
+	padding-left: 100px; */
+	margin-left: 10px;
+}
+
+.bot {
+	text-align: left;
+	padding: 5px;
+	border-radius: 5px;
+	margin: 5px;
+}
+
+.bot-text {
+	/* padding-right: 100px;
+	padding-left: 30px; */
+	margin-left: 10px;
+}
+
+.profImage, .feedbackBtn {
+	max-width: 35px;
+	max-height: 35px;
+	width: auto;
+	height: auto;
+}
+
+#loadingGif {
+	width: 70px !important; /* or any other size */
+	height: auto !important; /* maintain aspect ratio */
+}
+
+* {
+	font-family: "Noto Sans", sans-serif !important;
+}
+
+#invisible {
+    display: none
+}
+
+.message-divider {
+	width: 100%;
+	border: none;
+	border-top: 1px solid rgba(204, 204, 204, 0.1);
+	box-shadow: none;
+	margin: 10px 0;
+}
+
+/* this div includes the styling for the user input text field and the send button*/
+#sendTextDiv {
+	display: flex;
+	bottom: 0;
+	position: sticky;
+}
+
+@media only screen and (min-width: 800px) {
+	#sendTextDiv {
+		padding-left: 10px;
+		padding-right: 10px;
+	}
+}
+
+@media only screen and (min-width: 1000px) {
+	#sendTextDiv {
+		padding-left: 15px;
+		padding-right: 15px;
+	}
+}
+
+.message-container {
+	display: block; /* or flex with flex-direction column */
+}
+  
+.feedback-container {
+	display: block; /* ensures buttons are on a new line */
+	text-align: right; /* optional: aligns feedback buttons to the right */
+}
+
+/* sizing like and dislike button's image */
+.feedbackBtn img {
+	max-width: 17px; /* Adjust the max-width to make the image smaller */
+	max-height: 17px; /* Adjust the max-height to make the image smaller */
+}
+
+/* like and dislike button's styling */
+.feedbackBtn {
+	background: none;
+	border: none;
+	cursor: pointer;
+	font-size: 1rem; /* Adjust the font size to make the buttons smaller */
+	padding: 3px; /* Adjust the padding to make the buttons smaller */
+	transition: color 0.3s, background-color 0.3s;
+}
+
+/* like and dislike button hover */  
+.feedbackBtn:hover {
+	color: grey; /* Change the text color to grey when hovered */
+	background-color: rgba(192, 192, 192, 0.3); /* Light transparent grey background */
+}
+
+/* light mode */
+.light {
+	color-scheme: light;
+	background-color: #fff; /* Light mode background color */
+	color: #000; /* Light mode text color */
+}
+
+/* dark mode */
+.dark {
+	color-scheme: dark;
+	background-color: #121212; /* Dark mode background color */
+	color: #fff; /* Dark mode text color */
+}
