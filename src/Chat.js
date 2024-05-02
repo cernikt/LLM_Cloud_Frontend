@@ -24,7 +24,8 @@ const Chatbot = ({ toggleTheme, themeMode }) => {
   const [likes, setLikes] = useState([]);
   const [dislikes, setDislikes] = useState([]);
 
-  const API_URL = "http://10.199.4.134/api/v1/message";
+  const API_URL = "https://kodvij8iki.execute-api.us-east-2.amazonaws.com/prod/message";
+  const token = new URLSearchParams(document.location.search).get('token');
 
   const handleInputChange = (e) => {
     setInput(e.target.value);
@@ -66,6 +67,7 @@ const Chatbot = ({ toggleTheme, themeMode }) => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
+          token: token,
           messages: [...messages, userMessage]
         })
       });
