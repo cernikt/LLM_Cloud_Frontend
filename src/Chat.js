@@ -72,63 +72,15 @@ const Chatbot = ({ toggleTheme, themeMode }) => {
         })
       });
 
-      // set up stream infrastructure
-      let decoder = new TextDecoder(); // streamed response in bytes not txt, so need to decode
-      const reader = response.body.getReader();
+      // Get the response from the backend API
+      const responseJson = await response.json();
 
-      let { value, done } = await reader.read(); // when read a chunk, get {value, done} back -- values=bytes, done=bool
-
-      let chunk_1 = decoder.decode(value);
-
-      console.log(chunk_1);
-
-      let x = chunk_1.split("START_LLM_RESPONSE");
-
-      // sources are 1st thing sent (aka before Start llm response)
-      let sources = JSON.parse(x[0]).sources;
-
-      botMessage.sources = sources;
+      botMessage.sources = responseJson.sources;
+      botMessage.text = responseJson.text;
 
       // after start llm response, get actual bot message
       setMessages((messages) => [...messages, botMessage]);
       scrollBottom();
-
-      let accumulatedAnswer = x[1];
-
-      let botText = "";
-
-      // get complete data json obj chunk -- aka make sure Accumulated Answer is complete
-      while (!done) {
-        ({ value, done } = await reader.read());
-        value = decoder.decode(value);
-        accumulatedAnswer += value;
-        let chunks = accumulatedAnswer.split('\n\n');
-
-        let chunk_json;
-        for (let chunk of chunks) { // each chunk is 1 json obj (or an incomplete json obj), chunks is the entire response from server (aka "value")
-          chunk = chunk.replace("data: ", ""); // data: Json Obj -- have multiple of these
-
-          // if valid json, take it and put it in bot text to go up
-          try {
-            chunk_json = JSON.parse(chunk);
-            botText += chunk_json.choices[0].text;
-          } catch { // if not valid json, save for next set of json chunk from reader
-            accumulatedAnswer = chunk;
-          }
-        }
-
-        // haha lol. rerenders... sooowwwyyyy 👉👈
-        setMessages(currentHistory => {
-          let updatedHistory = [...currentHistory];
-          let lastChatIndex = updatedHistory.length - 1;
-          updatedHistory[lastChatIndex] = {
-            ...updatedHistory[lastChatIndex],
-            text: botText
-          };
-          return updatedHistory;
-        })
-        scrollBottom();
-      }
 
       // Enable the input and send button when the bot has finished responding
       setInputDisabled(false);
